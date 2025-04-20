@@ -1,0 +1,15 @@
+# Archivos y carpetas a ignorar
+node_modules/
+.env
+.DS_Store
+npm-debug.log*
+dist/
+coverage/
+
+# Archivos de entorno (no subir credenciales)
+*.env
+*.env.local
+
+# Editor/IDE
+.vscode/
+.idea/
