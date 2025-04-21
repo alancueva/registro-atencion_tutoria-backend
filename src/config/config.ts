@@ -1,24 +1,47 @@
 import dotenv from 'dotenv';
+import path from 'path';
 
-// Cargar variables de entorno desde .env
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
-interface Config {
-  port: number;
-  jwtSecret: string;
-  jwtExpiresIn: string;
-  environment: string;
-  allowedOrigins: string[];
-}
 
-const config: Config = {
-  port: parseInt(process.env.PORT || '3000', 10),
-  jwtSecret: process.env.JWT_SECRET || 'tutoria-secret-key',
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '24h',
-  environment: process.env.NODE_ENV || 'development',
-  allowedOrigins: process.env.ALLOWED_ORIGINS 
-    ? process.env.ALLOWED_ORIGINS.split(',') 
-    : ['http://localhost:8080']
+const config = {
+  app: {
+    name: process.env.APP_NAME || 'Backend para sistema de registro de atención tutorial',
+    port: process.env.PORT || 3000,
+    env: process.env.NODE_ENV || 'development',
+    apiPrefix: process.env.API_PREFIX || '/api'
+  },
+  db: {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    name: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    dialect: process.env.DB_DIALECT,
+    connectionLimit: process.env.DB_CONNECTION_LIMIT || 10,
+    queueLimit: process.env.DB_QUEUE_LIMIT || '0',
+    waitForConnections: process.env.DB_WAIT_FOR_CONNECTIONS || true
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN,
+    refreshSecret: process.env.REFRESH_TOKEN_SECRET,
+    refreshExpiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN
+  },
+  email: {
+    smtp: {
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD
+      }
+    },
+    from: process.env.EMAIL_FROM
+  },
+  client: {
+    url: process.env.FRONTEND_URL
+  }
 };
 
 export default config;

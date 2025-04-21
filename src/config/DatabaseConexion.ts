@@ -1,15 +1,14 @@
 import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
-dotenv.config();
+import config from './config';
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '123456',
-  database: process.env.DB_NAME || 'registro_atencion_tutorial',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+  host: config.db.host,
+  user: config.db.user,
+  password: config.db.password,
+  database: config.db.name,
+  waitForConnections: config.db.waitForConnections === true,
+  connectionLimit: config.db.connectionLimit ? Number(config.db.connectionLimit) : 10,
+  queueLimit: config.db.queueLimit ? Number(config.db.queueLimit) : 0,
 });
 
 export default pool;
