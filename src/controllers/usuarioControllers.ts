@@ -1,15 +1,15 @@
-import { Request, Response } from 'express';
+import { CreateUserDto, UpdateUserDto, UserQueryParams } from '../models/interface/usuario.interface';
 import { UserService } from '../services/usuarioService';
-import { CreateUserDto, UpdateUserDto, UserQueryParams } from '../models/usuarioDTO';
+import { Request, Response } from 'express';
 
-export class UserController {
-  private userService: UserService;
+export class UsuarioController {
+  private usuarioService: UserService;
 
   constructor() {
-    this.userService = new UserService();
+    this.usuarioService = new UserService();
   }
 
-  searchUsers = async (req: Request, res: Response): Promise<void> => {
+  public async searchUsers(req: Request, res: Response): Promise<void> {
     try {
       const queryParams: UserQueryParams = {
         dni: req.query.dni as string,
@@ -20,7 +20,7 @@ export class UserController {
         es_tutor: req.query.es_tutor as string
       };
 
-      const users = await this.userService.searchUsers(queryParams);
+      const users = await this.usuarioService.buscarUsuario(queryParams);
 
       res.status(200).json({
         success: true,
@@ -36,22 +36,114 @@ export class UserController {
     }
   };
 
+  public async recuperarUsuario(req: Request, res: Response): Promise<void> {
+    try {
+      const idusuario = parseInt(req.params.idusuario, 10);
 
-  createUser = async (req: Request, res: Response): Promise<void> => {
+      if (isNaN(idusuario)) {
+        res.status(400).json({ message: 'ID de usuario no válido' });
+        return;
+      }
+
+      const usuario = await this.usuarioService.recuperarUsuario(idusuario);
+
+      if (usuario && usuario.length > 0) {
+        res.status(200).json(usuario[0]);
+      } else {
+        res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+    } catch (error) {
+      console.error('Error en UsuarioController.recuperarUsuario:', error);
+      res.status(500).json({ message: 'Error al recuperar el usuario' });
+    }
+  }
+
+
+  public async verificarClave(req: Request, res: Response): Promise<void> {
+    try {
+      const { idusuario, clave_antigua, clave_nueva } = req.body;
+
+      if (!idusuario || !clave_antigua || !clave_nueva) {
+        res.status(400).json({ message: 'Faltan datos requeridos' });
+        return;
+      }
+
+      const result = await this.usuarioService.verificarClave(idusuario, clave_antigua, clave_nueva);
+
+      res.status(200).json({
+        success: true,
+        message: 'Clave verificada exitosamente',
+        data: result
+      });
+    } catch (error) {
+      console.error('Error en UsuarioController.verificarClave:', error);
+      res.status(500).json({ message: 'Error al verificar la clave' });
+    }
+  }
+
+  public async verificarDNI(req: Request, res: Response): Promise<void> {
+    try {
+      const { dni } = req.body;
+
+      if (!dni) {
+        res.status(400).json({ message: 'Falta el DNI' });
+        return;
+      }
+
+      const result = await this.usuarioService.verificar_dni(dni);
+
+      res.status(200).json({
+        success: true,
+        message: 'DNI verificado exitosamente',
+        data: result
+      });
+    } catch (error) {
+      console.error('Error en UsuarioController.verificarDNI:', error);
+      res.status(500).json({ message: 'Error al verificar el DNI' });
+    }
+  }
+
+
+  public async updateUserImage(req: Request, res: Response): Promise<void> {
+    try {
+      const { idusuario, imagen } = req.body;
+
+      if (!idusuario || !imagen) {
+        res.status(400).json({ message: 'Faltan datos requeridos' });
+        return;
+      }
+
+      const result = await this.usuarioService.update_usuario_imagenPerfil(idusuario, imagen);
+
+      if (result) {
+        res.status(200).json({
+          success: true,
+          message: 'Imagen de usuario actualizada exitosamente',
+          data: result
+        });
+      } else {
+        res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+    } catch (error) {
+      console.error('Error en UsuarioController.updateUserImage:', error);
+      res.status(500).json({ message: 'Error al actualizar la imagen de usuario' });
+    }
+  }
+
+  public async createUser(req: Request, res: Response): Promise<void> {
     try {
       const userData: CreateUserDto = req.body;
-      
-      // Basic validation
-      if (!userData.dni || !userData.nombres || !userData.ape_pat || !userData.ape_mat) {
+
+      if (!userData.dni || !userData.nombre || !userData.ape_pat || !userData.ape_mat) {
         res.status(400).json({
           success: false,
           message: 'Faltan datos requeridos para crear el usuario'
         });
         return;
       }
-      
-      const userId = await this.userService.insertuser(userData);
-      
+
+      const userId = await this.usuarioService.insertuser(userData);
+
       res.status(201).json({
         success: true,
         message: 'Usuario creado exitosamente',
@@ -65,36 +157,23 @@ export class UserController {
         error: (error as Error).message
       });
     }
-  };
+  }
 
-  updateUser = async (req: Request, res: Response): Promise<void> => {
+  public async updateUser(req: Request, res: Response): Promise<void> {
     try {
-      const userId = parseInt(req.params.id);
-      
-      if (isNaN(userId)) {
-        res.status(400).json({
-          success: false,
-          message: 'ID de usuario inválido'
-        });
-        return;
-      }
-      
-      const userData: UpdateUserDto = {
-        ...req.body,
-        idusuario: userId
-      };
-      
-      // Basic validation
-      if (!userData.dni || !userData.nombres || !userData.ape_pat || !userData.ape_mat) {
+
+      const userData: UpdateUserDto = req.body;
+
+      if (!userData.dni || !userData.nombre || !userData.ape_pat || !userData.ape_mat) {
         res.status(400).json({
           success: false,
           message: 'Faltan datos requeridos para actualizar el usuario'
         });
         return;
       }
-      
-      const success = await this.userService.updateUser(userData);
-      
+
+      const success = await this.usuarioService.updateUser(userData);
+
       if (success) {
         res.status(200).json({
           success: true,
@@ -114,5 +193,5 @@ export class UserController {
         error: (error as Error).message
       });
     }
-  };
+  }
 }

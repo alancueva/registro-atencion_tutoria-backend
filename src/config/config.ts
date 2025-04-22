@@ -41,6 +41,8 @@ const config = {
   },
   client: {
     url: process.env.FRONTEND_URL
+  },clave_hsh:{
+    md5:process.env.HASH_TEXT
   }
 };
 
