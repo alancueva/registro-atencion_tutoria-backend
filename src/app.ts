@@ -9,7 +9,8 @@ import turnoRouter from './routes/turnoRoutes';
 import areaRouter from './routes/areaRouter';
 import motivoRouter from './routes/motivoRouter';
 import atencionRouter from './routes/atencionRouter';
-
+import registroRouter from './routes/registroRouter';
+import excelRoutes from './routes/excel.routes';
 
 const app = express();
 
@@ -27,6 +28,8 @@ app.use('/api/turno', turnoRouter);
 app.use('/api/area', areaRouter);
 app.use('/api/motivo', motivoRouter);
 app.use('/api/atencion', atencionRouter);
+app.use('/api/registro', registroRouter);
+app.use('/api/excel', excelRoutes);
 
 
 

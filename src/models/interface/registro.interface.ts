@@ -23,3 +23,31 @@ export interface Registro {
     usuario_baja: string;
     fecha_baja: Date;
 }
+
+export interface RegistroBusqueda {
+    anio: number, 
+    mes: number, 
+    programa: string, 
+    area: string,
+    atencion: string
+
+}
+
+export interface RegistroBusquedaDocente extends RegistroBusqueda {
+    id_usuario: number,
+}
+
+
+export interface RegistroResponse {
+    number: number;
+    nom_ape: string; 
+    area: string; 
+    motivo: string; 
+    osb: string;
+    fecha: Date; 
+    atencion: string; 
+    programa: string; 
+    turno: string; 
+    semestre: string; 
+    tutor: string;
+}

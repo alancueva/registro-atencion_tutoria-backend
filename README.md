@@ -18,6 +18,9 @@ API para gestionar registros de atención tutorial, desarrollada en Node.js + Ex
 5. Para desarrollo:  `npm run dev`
 
 ## Dependencia
+- excel
+    `npm install exceljs`
+
 - ts-node-dev
     `npm install ts-node-dev --save-dev`
 
