@@ -11,6 +11,7 @@ import motivoRouter from './routes/motivoRouter';
 import atencionRouter from './routes/atencionRouter';
 import registroRouter from './routes/registroRouter';
 import excelRoutes from './routes/excel.routes';
+import dashboardRouter from './routes/dashboard.router';
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/motivo', motivoRouter);
 app.use('/api/atencion', atencionRouter);
 app.use('/api/registro', registroRouter);
 app.use('/api/excel', excelRoutes);
+app.use('/api/dashboard', dashboardRouter);
 
 
 
