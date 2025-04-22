@@ -3,6 +3,9 @@ import cors from 'cors';
 import userRoutes from './routes/usuarioRouter';
 import cryptoRouter from './routes/cryptoRouter';
 import inicio_sesioRouter from './routes/inicio_sesionRoutes';
+import programaEstudioRouter from './routes/programaEstudioRouter';
+import semestreRouter from './routes/semestreRouter';
+import turnoRouter from './routes/turnoRoutes';
 
 const app = express();
 
@@ -14,6 +17,10 @@ app.use(express.json());
 app.use('/api/usuario', userRoutes);
 app.use('/api/md5', cryptoRouter);
 app.use('/api/inicio_sesion', inicio_sesioRouter);
+app.use('/api/programaEstudio', programaEstudioRouter);
+app.use('/api/semestre', semestreRouter);
+app.use('/api/turno', turnoRouter);
+
 
 
 

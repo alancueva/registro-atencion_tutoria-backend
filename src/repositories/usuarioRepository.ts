@@ -2,7 +2,6 @@ import { CreateUserDto, UpdateUserDto, User, UserQueryParams } from '../models/i
 import { IUsuario } from '../models/interface/usuario.interface';
 import { CryptoUtil } from '../utils/CryptoUtil';
 import pool from '../config/DatabaseConexion';
-import { log } from 'console';
 
 export class UserRepository {
 
@@ -10,8 +9,6 @@ export class UserRepository {
     let connection;
     try {
       connection = await pool.getConnection();
-
-
       const dni = params.dni || '';
       const nombre = params.nombre || '';
       const ape_pat = params.ape_pat || '';
