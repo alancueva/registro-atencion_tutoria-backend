@@ -12,6 +12,7 @@ import atencionRouter from './routes/atencionRouter';
 import registroRouter from './routes/registroRouter';
 import excelRoutes from './routes/excel.routes';
 import dashboardRouter from './routes/dashboard.router';
+import alumnosRouter from './routes/alumnos.routes';
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/api/atencion', atencionRouter);
 app.use('/api/registro', registroRouter);
 app.use('/api/excel', excelRoutes);
 app.use('/api/dashboard', dashboardRouter);
+app.use('/api/alumnos', alumnosRouter);
 
 
 
