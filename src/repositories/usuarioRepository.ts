@@ -41,8 +41,6 @@ export class UserRepository {
 
       const [rows] = await connection.query('CALL sp_usuario_recuperar(?)', idusuario);
 
-      connection.release();
-
       return (rows as any)[0] as IUsuario[];
     } catch (error) {
       console.error('Error in UserRepository.recuperar_usuario: ', error);
