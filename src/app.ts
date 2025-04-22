@@ -6,6 +6,10 @@ import inicio_sesioRouter from './routes/inicio_sesionRoutes';
 import programaEstudioRouter from './routes/programaEstudioRouter';
 import semestreRouter from './routes/semestreRouter';
 import turnoRouter from './routes/turnoRoutes';
+import areaRouter from './routes/areaRouter';
+import motivoRouter from './routes/motivoRouter';
+import atencionRouter from './routes/atencionRouter';
+
 
 const app = express();
 
@@ -20,6 +24,9 @@ app.use('/api/inicio_sesion', inicio_sesioRouter);
 app.use('/api/programaEstudio', programaEstudioRouter);
 app.use('/api/semestre', semestreRouter);
 app.use('/api/turno', turnoRouter);
+app.use('/api/area', areaRouter);
+app.use('/api/motivo', motivoRouter);
+app.use('/api/atencion', atencionRouter);
 
 
 
