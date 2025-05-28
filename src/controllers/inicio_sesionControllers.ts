@@ -9,9 +9,16 @@ export class InicioSesionController {
     }
 
 
-    public async iniciarSesion (req: Request, res: Response) {
+    public async iniciarSesion (req: Request, res: Response): Promise<void> {
         try {
             const { dni, contrasena } = req.body;
+            if (!dni || !contrasena) {
+                res.status(400).json({ 
+                    success: false,
+                    message: 'DNI y contraseña son requeridos' 
+                });
+                return;
+            }
             const resultado = await this.inicioSesionService.iniciarSesion(dni, contrasena);
             res.status(200).json({ 
                 success: true,
@@ -27,7 +34,7 @@ export class InicioSesionController {
                     error.message.includes('asociado a un programa') ||
                     error.message.includes('asignado como tutor')) {
                     
-                    return res.status(400).json({ 
+                    res.status(400).json({ 
                         success: false,
                         message: error.message 
                     });

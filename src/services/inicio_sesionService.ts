@@ -1,3 +1,4 @@
+import { Inicio_Sesion } from '../models/interface/inicio_sesion.interface';
 import { InicioSesionRepository } from '../repositories/inicio_sesionRepository';
 
 export class InicioSesionService {
@@ -7,7 +8,7 @@ export class InicioSesionService {
         this.inicioSesionRepository = new InicioSesionRepository();
     }
 
-    public async iniciarSesion(dni: string, password: string) {
+    public async iniciarSesion(dni: string, password: string): Promise<Inicio_Sesion | null> {
         if (dni == "" || password == "") throw new Error("DNI o clave no pueden estar vacíos");
         const dni_rege = /^\d+$/;
         if (!dni_rege.test(dni)) throw new Error("El DNI debe contener solo números");
