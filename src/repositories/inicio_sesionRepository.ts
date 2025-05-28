@@ -5,13 +5,12 @@ import pool from '../config/DatabaseConexion';
 export class InicioSesionRepository {
 
     public async iniciarSesion(u_dni: string, u_clave: string): Promise<Inicio_Sesion | null> {
-        let connection;
-        connection = await pool.getConnection();
         try {
+            // SELECT * FROM sp_inicio_sesion($1, $2)
+            // CALL sp_inicio_sesion(?, ?) 
             const clave = await CryptoUtil.encrypt(u_clave);
-            const [rows]: any = await connection.query(
-                'CALL sp_inicio_sesion(?, ?)', [u_dni, clave]
-            );
+            const [rows]: any = await pool.query('CALL sp_inicio_sesion(?, ?)', [u_dni, clave]);
+
             const result = rows[0];
             if (result && result.length > 0) {
                 const sesion: Inicio_Sesion = {
@@ -36,8 +35,6 @@ export class InicioSesionRepository {
         } catch (error) {
             console.error('Error inicio sesion: ', error);
             throw error;
-        } finally {
-            if (connection) connection.release();
         }
     }
 }
