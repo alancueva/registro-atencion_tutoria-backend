@@ -1,5 +1,5 @@
 import { MotivoRepository } from "../repositories/motivoRepository";
-import { Motivo } from "../models/interface/motivo.interface";
+import { Motivo, MotivoporArea } from "../models/interface/motivo.interface";
 
 export class MotivoService {
     private motivoRepository: MotivoRepository;
@@ -29,7 +29,7 @@ export class MotivoService {
         }
     }
 
-    public async getMotivos_por_area(idArea: number): Promise<Motivo[]> {
+    public async getMotivos_por_area(idArea: number): Promise<MotivoporArea[]> {
         try {
             const motivos = await this.motivoRepository.getMotivos_por_area(idArea);
             return motivos;

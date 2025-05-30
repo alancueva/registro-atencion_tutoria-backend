@@ -49,11 +49,11 @@ export class MotivoController {
 
     public async getMotivos_por_area(req: Request, res: Response): Promise<void> {
         try {
-            const idArea = parseInt(req.params.idArea, 10);
+            const idArea = parseInt(req.params.idarea, 10);     
             const motivos = await this.motivoService.getMotivos_por_area(idArea);
             res.status(200).json({
                 success: true,
-                data: motivos,
+                data: motivos
             });
         } catch (error) {
             console.error('Error en MotivoController.getMotivos_por_area:', error);

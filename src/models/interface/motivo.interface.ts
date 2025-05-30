@@ -11,3 +11,8 @@ export interface Motivo{
     usuario_baja: string;
     fecha_baja: Date;
 }
+
+export interface MotivoporArea {
+    idMotivo: number;
+    motivo: string;
+}
