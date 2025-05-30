@@ -4,9 +4,9 @@ import { Alumno, AlumnoConsulta } from '../models/interface/alumno.interface';
 export class AlumnoRepository {
 
     public async verificarUsuarioDni(a_dni: string, a_periodo_academico: string, a_anio: string): Promise<boolean> {
-        const conn = await pool.getConnection();
+        // const conn = await pool.getConnection();
         try {
-            const [rows]: any = await conn.query('CALL sp_alumnos_verificar_dni(?, ?, ?)', [
+            const [rows]: any = await pool.query('CALL sp_alumnos_verificar_dni(?, ?, ?)', [
                 a_dni,
                 a_periodo_academico,
                 a_anio
@@ -18,15 +18,15 @@ export class AlumnoRepository {
             return result && Number(result['result']) === 1;
         } catch (error: any) {
             throw new Error(`Error: ${error.message}`);
-        } finally {
-            conn.release();
-        }
+        } 
+                // finally {
+                //     conn.release();
+                // }
     }
 
     public async consulta_alumnos(ac: AlumnoConsulta): Promise<Alumno[]> {
-        const conn = await pool.getConnection();
         try {
-            const [rows]: any = await conn.query('CALL sp_alumnos_consulta(?, ?, ?, ?, ?, ?, ?, ?)', [
+            const [rows]: any = await pool.query('CALL sp_alumnos_consulta(?, ?, ?, ?, ?, ?, ?, ?)', [
                 ac.dni,
                 ac.nombres,
                 ac.apellidos,
@@ -39,15 +39,12 @@ export class AlumnoRepository {
             return rows[0] as Alumno[];
         } catch (error: any) {
             throw new Error(`Ocurrio un error en la validación: ${error.message}`);
-        } finally {
-            conn.release();
         }
     }
 
     public async mostrar_alumnos_programa_turno_semestre(programa: string, turno: string, semestre: string): Promise<Alumno[]> {
-        const conn = await pool.getConnection();
         try {
-            const [rows]: any = await conn.query('CALL sp_alumnos_mostrar_programa_turno_semestre(?, ?, ?)', [
+            const [rows]: any = await pool.query('CALL sp_alumnos_mostrar_programa_turno_semestre(?, ?, ?)', [
                 programa,
                 turno,
                 semestre
@@ -58,29 +55,24 @@ export class AlumnoRepository {
             })) as Alumno[];
         } catch (error: any) {
             throw new Error(`Ocurrio un error en la validación: ${error.message}`);
-        } finally {
-            conn.release();
         }
     }
 
     public async recuperar_alumnos(a_idalumnos: number): Promise<Alumno[]> {
-        const conn = await pool.getConnection();
+
         try {
-            const [rows]: any = await conn.query('CALL sp_alumnos_recuperar(?)', [
+            const [rows]: any = await pool.query('CALL sp_alumnos_recuperar(?)', [
                 a_idalumnos
             ]);
             return rows[0] as Alumno[];
         } catch (error: any) {
             throw new Error(`Error: ${error.message}`);
-        } finally {
-            conn.release();
         }
     }
 
     public async insertar_alumnos(ac: Alumno): Promise<boolean> {
-        const conn = await pool.getConnection();
         try {
-            await conn.query('CALL sp_alumnos_insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            await pool.query('CALL sp_alumnos_insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 ac.dni,
                 ac.nombres,
                 ac.apellidos,
@@ -96,15 +88,12 @@ export class AlumnoRepository {
             return true;
         } catch (error: any) {
             throw new Error(`Error: ${error.message}`);
-        } finally {
-            conn.release();
-        }
+        } 
     }
 
     public async actualizar_alumnos(ac: Alumno): Promise<boolean> {
-        const conn = await pool.getConnection();
         try {
-            await conn.query('CALL sp_alumnos_insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            await pool.query('CALL sp_alumnos_insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 ac.idalumnos,
                 ac.dni,
                 ac.nombres,
@@ -121,9 +110,7 @@ export class AlumnoRepository {
             return true;
         } catch (error: any) {
             throw new Error(`Error: ${error.message}`);
-        } finally {
-            conn.release();
-        }
+        } 
     }
 
 }

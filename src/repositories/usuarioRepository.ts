@@ -6,9 +6,7 @@ import pool from '../config/DatabaseConexion';
 export class UserRepository {
 
   public async buscar_usuario(params: UserQueryParams): Promise<User[]> {
-    let connection;
     try {
-      connection = await pool.getConnection();
       const dni = params.dni || '';
       const nombre = params.nombre || '';
       const ape_pat = params.ape_pat || '';
@@ -16,50 +14,35 @@ export class UserRepository {
       const es_docente = params.es_docente || '';
       const es_tutor = params.es_tutor || '';
 
-      const [rows] = await connection.query(
+      const [rows]: any = await pool.query(
         'CALL sp_usuario_consulta(?, ?, ?, ?, ?, ?)',
         [dni, nombre, ape_pat, ape_mat, es_docente, es_tutor]
       );
-
-      connection.release();
 
       return (rows as any)[0] as User[];
     } catch (error) {
       console.error('Error en UserRepository.buscar_usuario:', error);
       throw error;
-    } finally {
-      if (connection) {
-        connection.release();
-      }
     }
   }
 
   public async recuperar_usuario(idusuario: number): Promise<IUsuario[]> {
-    let connection;
     try {
-      connection = await pool.getConnection();
-
-      const [rows] = await connection.query('CALL sp_usuario_recuperar(?)', idusuario);
+      const [rows]: any = await pool.query('CALL sp_usuario_recuperar(?)', [idusuario]);
 
       return (rows as any)[0] as IUsuario[];
     } catch (error) {
       console.error('Error in UserRepository.recuperar_usuario: ', error);
       throw error;
-    } finally {
-      if (connection) {
-        connection.release();
-      }
     }
   }
 
   public async verificar_clave(idusuario: number, clave_antigua: string, clave_nueva: string): Promise<string> {
-    let connection;
     try {
-      connection = await pool.getConnection();
       const encryptedOld = await CryptoUtil.encrypt(clave_antigua);
       const encryptedNew = await CryptoUtil.encrypt(clave_nueva);
-      
-      const [rows] = await connection.query('CALL sp_usuario_verificar_clave(?, ?, ?)', [idusuario, encryptedOld, encryptedNew]);
+
+      const [rows]: any = await pool.query('CALL sp_usuario_verificar_clave(?, ?, ?)', [idusuario, encryptedOld, encryptedNew]);
 
       const result = (rows as any)[0];
       if (result && result[0] && typeof result[0].mensaje !== 'undefined') {
@@ -73,18 +56,12 @@ export class UserRepository {
       }
       console.error('Error en UserRepository.verificar_clave:', error);
       throw error;
-    } finally {
-      if (connection) {
-        connection.release();
-      }
-    }
+    } 
   }
 
   public async verificar_dni(dni: string): Promise<boolean> {
-    let connection;
     try {
-      connection = await pool.getConnection();
-      const [rows] = await connection.query('CALL sp_usuario_verificar_dni(?)', [dni]);
+      const [rows]: any = await pool.query('CALL sp_usuario_verificar_dni(?)', [dni]);
       const result = (rows as any)[0];
       if (result && result[0] && typeof result[0].n_dni !== 'undefined') {
         return result[0].n_dni > 0;
@@ -93,19 +70,14 @@ export class UserRepository {
     } catch (error) {
       console.error('Error in UserRepository.verificar_dni:', error);
       throw error;
-    } finally {
-      if (connection) {
-        connection.release();
-      }
     }
   }
 
 
   public async update_usuario_imagenPerfil(idusuario: number, imagen: Buffer): Promise<string | null> {
-    let connection;
+
     try {
-      connection = await pool.getConnection();
-      const [rows] = await connection.query(
+      const [rows]: any = await pool.query(
         'CALL sp_usuario_update_ImagenPerfil(?, ?)',
         [idusuario, imagen]
       );
@@ -117,19 +89,14 @@ export class UserRepository {
     } catch (error) {
       console.error('Error in UserRepository.update_usuario_imagenPerfil:', error);
       throw error;
-    } finally {
-      if (connection) {
-        connection.release();
-      }
     }
   }
 
 
   public async insert_usuario(userData: CreateUserDto): Promise<boolean> {
-    let connection;
     try {
-      connection = await pool.getConnection();
-      await connection.query('CALL sp_usuario_insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)',
+
+      await pool.query('CALL sp_usuario_insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)',
         [userData.idrol_usuario,
         userData.dni,
         userData.nombre,
@@ -152,19 +119,13 @@ export class UserRepository {
     } catch (error) {
       console.error('Error in UserRepository.insert_usuario:', error);
       throw error;
-    } finally {
-      if (connection) {
-        connection.release();
-      }
     }
   }
 
   public async update_usuario(userData: UpdateUserDto): Promise<boolean> {
-    let connection;
     try {
-      connection = await pool.getConnection();
 
-      await connection.query('CALL sp_usuario_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+      await pool.query('CALL sp_usuario_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
         userData.idusuario,
         userData.idrol_usuario,
         userData.dni,
@@ -187,10 +148,6 @@ export class UserRepository {
     } catch (error) {
       console.error('Error in UserRepository.update_usuario:', error);
       throw error;
-    } finally {
-      if (connection) {
-        connection.release();
-      }
     }
   }
 

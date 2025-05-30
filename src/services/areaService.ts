@@ -20,8 +20,8 @@ export class AreaService{
         }
     }
 
-    public async getRecuperarAreas(id_area: number): Promise<Area[]> {
-        try {
+    public async getRecuperarAreas(id_area: number): Promise<Area> {
+        try {    
             const areas = await this.areaRepository.getRecuperarAreas(id_area);
             return areas;
         } catch (error) {

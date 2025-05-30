@@ -4,10 +4,8 @@ import { Registro, RegistroBusqueda, RegistroBusquedaDocente, RegistroResponse }
 export class RegistroRepository {
 
     public async getRegistrosBusquedaDocente(registroDTO: RegistroBusquedaDocente):Promise<RegistroResponse[]> {    
-        let connetion;
         try {
-            connetion = await pool.getConnection();
-            const [rows] = await connetion.query("CALL sp_buscar_tabla_docente(?,?,?,?,?,?,?)",
+            const [rows]: any = await pool.query("CALL sp_buscar_tabla_docente(?,?,?,?,?,?,?)",
                 [registroDTO.anio,
                     registroDTO.mes,
                     `%${registroDTO.area}%`, 
@@ -20,18 +18,12 @@ export class RegistroRepository {
             
             console.error(error);
             throw new Error('Error fetching registros');
-        }finally {
-            if (connetion) {
-                connetion.release();
-            }
         }
     }
 
     public async getRegistrosBusqueda(registroDTO: RegistroBusqueda):Promise<RegistroResponse[]> {    
-        let connetion;
         try {
-            connetion = await pool.getConnection();
-            const [rows] = await connetion.query("CALL sp_buscar_tabla_admin(?,?,?,?,?)",
+            const [rows]: any = await pool.query("CALL sp_buscar_tabla_admin(?,?,?,?,?)",
                 [registroDTO.anio,
                     registroDTO.mes,
                     `%${registroDTO.programa}%`, 
@@ -44,18 +36,12 @@ export class RegistroRepository {
             
             console.error(error);
             throw new Error('Error fetching registros');
-        }finally {
-            if (connetion) {
-                connetion.release();
-            }
         }
     }
 
     public async insert_tabla(registroDTO: Registro): Promise<boolean> {   
-        let connetion;
         try {
-            connetion = await pool.getConnection();
-            await connetion.query("CALL sp_tabla_insert(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            await pool.query("CALL sp_tabla_insert(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 [registroDTO.nom_ape,
                     registroDTO.idarea,
                     registroDTO.motivo,
@@ -81,26 +67,16 @@ export class RegistroRepository {
             
             console.error(error);
             throw new Error('Error inserting registros');
-        }finally {
-            if (connetion) {
-                connetion.release();
-            }
         }
     }  
     
     public async insertTablaMultiple(jsonData: any[]): Promise<boolean> {
-        let connection;
         try {
-            connection = await pool.getConnection();
-            await connection.query("CALL sp_tabla_insert_multiple(?)", [JSON.stringify(jsonData)]);
+            await pool.query("CALL sp_tabla_insert_multiple(?)", [JSON.stringify(jsonData)]);
             return true;
         } catch (error) {
             console.error(error);
             throw new Error('Error inserting multiple registros');
-        } finally {
-            if (connection) {
-                connection.release();
-            }
         }
     }
 }

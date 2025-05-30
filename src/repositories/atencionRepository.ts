@@ -8,21 +8,13 @@ export class AtencionRepository{
      * @returns {Promise<Atencion[]>} Lista de atenciones
      */
     public async getAllAtencion(): Promise<Atencion[]> {
-        let connetion;
         try {
-            connetion = await pool.getConnection();
-            const [rows] = await connetion.query("CALL sp_atencion()");
+            const [rows]: any = await pool.query("CALL sp_atencion()");
             return rows as Atencion[];
         }
         catch (error) {
-            console.error('Error al obtener los motivos:', error);
-            throw new Error('Error al obtener los motivos');
-        }
-        finally {
-            if (connetion) {
-                connetion.release();
-            }
+            console.error('Error al obtener las atenciones:', error);
+            throw new Error('Error al obtener las atenciones');
         }
     }
-
 }

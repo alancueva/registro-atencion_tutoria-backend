@@ -1,6 +1,16 @@
+
 import mysql from 'mysql2/promise';
+// import { Pool } from 'pg';
+
 import config from './config';
 
+// const pool = new Pool({
+//   user: config.db.user,
+//   host: config.db.host,
+//   database: config.db.name,
+//   password: config.db.password,
+//   port: config.db.port ? Number(config.db.port) : 5432,
+// })
 const pool = mysql.createPool({
   host: config.db.host,
   user: config.db.user,
