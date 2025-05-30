@@ -1,5 +1,5 @@
-import pool from '../config/DatabaseConexion'; // Asegúrate de que la ruta sea correcta
-import { Turno } from "../models/interface/turno.interface"; // Asegúrate de que la ruta sea correcta
+import pool from '../config/DatabaseConexion'; 
+import { Turno } from "../models/interface/turno.interface";
 
 
 export class TurnoRepository {

@@ -1,4 +1,4 @@
-import pool from '../config/DatabaseConexion'; // Asegúrate de que la ruta sea correcta
+import pool from '../config/DatabaseConexion';
 import { DashboardCantidadSesiones, DashboardConteoAdmin,DashboardConteoPorcentajeArea,DashboardDocenteSesiones } from '../models/interface/dashboard.interface';
 export class DashboardRepository {
 

@@ -1,4 +1,4 @@
-import pool from '../config/DatabaseConexion'; // Asegúrate de que la ruta sea correcta
+import pool from '../config/DatabaseConexion';
 import { Registro, RegistroBusqueda, RegistroBusquedaDocente, RegistroResponse } from '../models/interface/registro.interface';
 
 export class RegistroRepository {

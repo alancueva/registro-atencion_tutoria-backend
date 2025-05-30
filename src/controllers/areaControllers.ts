@@ -19,7 +19,7 @@ export class AreaContorllers {
             const areas = await this.areaService.getAreas();
             res.status(200).json({
                 success: true,
-                data: areas,
+                data: areas
             });
         } catch (error) {
             console.error('Error en AreaControllers.getAreas:', error);
@@ -37,7 +37,7 @@ export class AreaContorllers {
             const areas = await this.areaService.getRecuperarAreas(id_area);
             res.status(200).json({
                 success: true,
-                data: areas,
+                data: areas
             });
         } catch (error) {
             console.error('Error en AreaControllers.getRecuperarAreas:', error);

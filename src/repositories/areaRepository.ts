@@ -1,5 +1,5 @@
-import pool from '../config/DatabaseConexion'; // Asegúrate de que la ruta sea correcta
-import { Area } from "../models/interface/area.interface"; // Asegúrate de que la ruta sea correcta
+import pool from '../config/DatabaseConexion';
+import { Area } from "../models/interface/area.interface";
 
 export class AreaRepository {
 

@@ -1,6 +1,5 @@
-import pool from '../config/DatabaseConexion'; // Asegúrate de que la ruta sea correcta
-import { Motivo } from "../models/interface/motivo.interface"; // Asegúrate de que la ruta sea correcta
-
+import pool from '../config/DatabaseConexion';
+import { Motivo , MotivoporArea} from "../models/interface/motivo.interface"; 
 export class MotivoRepository{
 
 
@@ -26,14 +25,14 @@ export class MotivoRepository{
         }
     }
 
-    public async getMotivos_por_area(idArea:number): Promise<Motivo[]> {
+    public async getMotivos_por_area(idArea:number): Promise<MotivoporArea[]> {
         try {
             const [rows]: any = await pool.query("CALL sp_motivo_recuperar_por_idarea(?)", [idArea]);
-            return rows as Motivo[];
+            return rows as MotivoporArea[];
         }
         catch (error) {
             console.error('Error al obtener los motivos:', error);
-            throw new Error('Error al obtener los motivos');
+            throw new Error('Error al obtener los motivos ' + error);
         }    
     }
 
