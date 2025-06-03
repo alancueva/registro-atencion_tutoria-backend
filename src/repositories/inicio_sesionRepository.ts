@@ -16,7 +16,7 @@ export class InicioSesionRepository {
                 const sesion: Inicio_Sesion = {
                     idusuario: result[0].idusuario,
                     dni: result[0].dni,
-                    nombres: result[0].nombres,
+                    nombres: result[0].nombre,
                     ape_pat: result[0].ape_pat,
                     ape_mat: result[0].ape_mat,
                     usua_datos: result[0].usua_datos,
