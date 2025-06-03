@@ -1,5 +1,5 @@
 import pool from '../config/DatabaseConexion';
-import { Motivo , MotivoporArea} from "../models/interface/motivo.interface"; 
+import { Motivo , MotivoporArea, MotivoInsert, MotivoUpdate} from "../models/interface/motivo.interface"; 
 export class MotivoRepository{
 
 
@@ -36,10 +36,10 @@ export class MotivoRepository{
         }    
     }
 
-    public async insert_motivo(motivoData: Motivo): Promise<boolean> {
+    public async insert_motivo(motivoData: MotivoInsert): Promise<boolean> {
         try {
             await pool.query('CALL sp_motivo_insert(?, ?)', [
-                motivoData.idarea, motivoData.motivo ]);
+                motivoData.idArea, motivoData.motivo ]);
             return true;
         } catch (error) {
             console.error('Error en MotivoRepository.insert_motivo: ', error);
@@ -47,10 +47,10 @@ export class MotivoRepository{
         }
     }
 
-    public async update_motivo(motivoData: Motivo): Promise<boolean> {
+    public async update_motivo(motivoData: MotivoUpdate): Promise<boolean> {
         try {
-            await pool.query('CALL sp_motivo_update(?, ?, ?)', [
-                motivoData.idarea, motivoData.idmotivo,motivoData.motivo ]);
+            await pool.query('CALL sp_motivo_update(?, ?, ?, ?)', [
+                motivoData.idArea, motivoData.idMotivo, motivoData.motivo, motivoData.vigencia ]);
             return true;
         } catch (error) {
             console.error('Error en MotivoRepository.update_motivo: ', error);

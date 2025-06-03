@@ -16,3 +16,20 @@ export interface MotivoporArea {
     idMotivo: number;
     motivo: string;
 }
+
+export interface MotivoConsultar {
+    idArea: number;
+    motivo: string;
+}
+
+export interface MotivoInsert {
+    idArea: number;
+    motivo: string;
+}
+
+export interface MotivoUpdate {
+    idMotivo: number;
+    motivo: string;
+    idArea: number;
+    vigencia: string;
+}

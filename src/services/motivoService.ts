@@ -1,5 +1,5 @@
 import { MotivoRepository } from "../repositories/motivoRepository";
-import { Motivo, MotivoporArea } from "../models/interface/motivo.interface";
+import { Motivo, MotivoporArea, MotivoInsert, MotivoUpdate } from "../models/interface/motivo.interface";
 
 export class MotivoService {
     private motivoRepository: MotivoRepository;
@@ -39,7 +39,7 @@ export class MotivoService {
         }
     }
 
-    public async insert_motivo(motivoData: Motivo): Promise<boolean> {
+    public async insert_motivo(motivoData: MotivoInsert): Promise<boolean> {
         try {
             const result = await this.motivoRepository.insert_motivo(motivoData);
             return result;
@@ -49,7 +49,7 @@ export class MotivoService {
         }
     }
 
-    public async update_motivo(motivoData: Motivo): Promise<boolean> {
+    public async update_motivo(motivoData: MotivoUpdate): Promise<boolean> {
         try {
             const result = await this.motivoRepository.update_motivo(motivoData);
             return result;

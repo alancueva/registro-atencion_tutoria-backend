@@ -1,5 +1,5 @@
 import { MotivoService } from "../services/motivoService";
-import { Motivo } from "../models/interface/motivo.interface";
+import { Motivo, MotivoConsultar, MotivoInsert, MotivoUpdate } from "../models/interface/motivo.interface";
 import { Request, Response } from 'express';
 
 export class MotivoController {
@@ -11,9 +11,14 @@ export class MotivoController {
  
     public async getMotivos_Consultar(req: Request, res: Response): Promise<void> {
         try {
-            const idArea = parseInt(req.params.idArea, 10) || 0;
-            const motivo = req.params.motivo || ''; 
-
+            const { idArea, motivo } = req.body as MotivoConsultar;
+            if (typeof idArea !== 'number' || typeof motivo !== 'string') {
+                res.status(400).json({
+                    success: false,
+                    message: 'Parámetros inválidos. Asegúrese de enviar idArea como número y motivo como cadena.'
+                });
+                return;
+            }
             const motivos = await this.motivoService.getMotivos_Consultar(idArea, motivo);
             res.status(200).json({
                 success: true,
@@ -67,7 +72,7 @@ export class MotivoController {
 
     public async insert_motivo(req: Request, res: Response): Promise<void> {
         try {
-            const motivoData: Motivo = req.body;
+            const motivoData: MotivoInsert = req.body;
             const result = await this.motivoService.insert_motivo(motivoData);
             res.status(200).json({
                 success: true,
@@ -86,7 +91,7 @@ export class MotivoController {
 
     public async update_motivo(req: Request, res: Response): Promise<void> {
         try {
-            const motivoData: Motivo = req.body;
+            const motivoData: MotivoUpdate = req.body;
             const result = await this.motivoService.update_motivo(motivoData);
             res.status(200).json({
                 success: true,
