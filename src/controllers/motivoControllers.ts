@@ -11,7 +11,7 @@ export class MotivoController {
  
     public async getMotivos_Consultar(req: Request, res: Response): Promise<void> {
         try {
-            const idArea = parseInt(req.params.idArea, 10);
+            const idArea = parseInt(req.params.idArea, 10) || 0;
             const motivo = req.params.motivo || ''; 
 
             const motivos = await this.motivoService.getMotivos_Consultar(idArea, motivo);
