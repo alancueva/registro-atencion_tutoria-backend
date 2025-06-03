@@ -1,4 +1,4 @@
 export interface Area {
-    idarea: number;
+    idArea: number;
     area: string;
 }

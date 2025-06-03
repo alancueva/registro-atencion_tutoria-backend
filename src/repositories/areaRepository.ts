@@ -33,7 +33,7 @@ export class AreaRepository {
     public async update_area(areaData: Area): Promise<boolean> {
         try {
             await pool.query('CALL sp_area_modificar(?, ?)', [
-                areaData.idarea, areaData.area]);
+                areaData.idArea, areaData.area]);
             return true;
         } catch (error) {
             console.error('Error en AreaRepository.update_area: ', error);
