@@ -9,7 +9,7 @@ export class semestreRepository {
      */
     public async getSemestres(): Promise<semestre[]> {
         try {
-            const result: any = await pool.query("CALL sp_semestre()");
+            const [result]: any = await pool.query("CALL sp_semestre()");
             return result[0] as semestre[];
         } catch (error) {
             console.error('Error en semestreRepository.getSemestresVigentes:', error);

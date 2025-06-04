@@ -11,7 +11,7 @@ export class TurnoRepository {
     public async getTurnos(): Promise<Turno[]> {
         try {
             const [rows]: any = await pool.query("CALL sp_turno()");
-            return rows as Turno[];
+            return rows[0] as Turno[];
         }
         catch (error) {
             console.error('Error al obtener los turnos:', error);

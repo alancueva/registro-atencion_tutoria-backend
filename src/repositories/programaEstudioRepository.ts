@@ -9,13 +9,9 @@ export class ProgramaEstudioRepository {
      */
     public async getProgramasVigentes(): Promise<ProgramaEstudio[]> {
         try {
-        const result: any = await pool.query("CALL sp_programa()");
+        const [result]: any = await pool.query("CALL sp_programa()");
 
-        const programas: ProgramaEstudio[] = (result[0] as any).map((row: any) => ({
-            idprogramadeestudio: row.idprogramadeestudio,
-            programa: row.programa       
-        }));
-        return programas;
+        return result[0] as ProgramaEstudio[];
         }catch (error) {
             console.error('Error en ProgramaEstudioRepository.getProgramasVigentes:', error);
             throw error;
