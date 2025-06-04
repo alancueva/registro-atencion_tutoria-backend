@@ -12,16 +12,14 @@ export class UsuarioController {
   public async searchUsers(req: Request, res: Response): Promise<void> {
     try {
       const queryParams: UserQueryParams = {
-        dni: req.query.dni as string,
-        nombre: req.query.nombre as string,
-        ape_pat: req.query.ape_pat as string,
-        ape_mat: req.query.ape_mat as string,
-        es_docente: req.query.es_docente as string,
-        es_tutor: req.query.es_tutor as string
+        dni: req.body.dni as string,
+        nombre: req.body.nombre as string,
+        ape_pat: req.body.ape_pat as string,
+        ape_mat: req.body.ape_mat as string,
+        es_docente: req.body.es_docente as string,
+        es_tutor: req.body.es_tutor as string
       };
-
       const users = await this.usuarioService.buscarUsuario(queryParams);
-
       res.status(200).json({
         success: true,
         data: users
@@ -47,8 +45,8 @@ export class UsuarioController {
 
       const usuario = await this.usuarioService.recuperarUsuario(idusuario);
 
-      if (usuario && usuario.length > 0) {
-        res.status(200).json(usuario[0]);
+      if (usuario) {
+        res.status(200).json({data: usuario });
       } else {
         res.status(404).json({ message: 'Usuario no encontrado' });
       }
@@ -171,9 +169,7 @@ export class UsuarioController {
         });
         return;
       }
-
       const success = await this.usuarioService.updateUser(userData);
-
       if (success) {
         res.status(200).json({
           success: true,

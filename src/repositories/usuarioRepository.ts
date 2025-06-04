@@ -26,11 +26,14 @@ export class UserRepository {
     }
   }
 
-  public async recuperar_usuario(idusuario: number): Promise<IUsuario[]> {
+  public async recuperar_usuario(idusuario: number): Promise<IUsuario> {
     try {
       const [rows]: any = await pool.query('CALL sp_usuario_recuperar(?)', [idusuario]);
-
-      return (rows as any)[0] as IUsuario[];
+      const usuario = rows[0][0] as IUsuario;
+      if (usuario && usuario.clave) {
+        usuario.clave = await CryptoUtil.decrypt(usuario.clave);
+      }
+      return usuario;
     } catch (error) {
       console.error('Error in UserRepository.recuperar_usuario: ', error);
       throw error;
@@ -95,7 +98,7 @@ export class UserRepository {
 
   public async insert_usuario(userData: CreateUserDto): Promise<boolean> {
     try {
-
+      const encryptedClave = userData.clave ? await CryptoUtil.encrypt(userData.clave) : null;
       await pool.query('CALL sp_usuario_insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)',
         [userData.idrol_usuario,
         userData.dni,
@@ -103,7 +106,7 @@ export class UserRepository {
         userData.ape_pat,
         userData.ape_mat,
         userData.correo,
-        CryptoUtil.encrypt(userData.clave),
+        encryptedClave,
         userData.es_docente,
         userData.es_tutor,
         userData.idTurno,
@@ -124,8 +127,8 @@ export class UserRepository {
 
   public async update_usuario(userData: UpdateUserDto): Promise<boolean> {
     try {
-
-      await pool.query('CALL sp_usuario_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+      const encryptedClave = userData.clave ? await CryptoUtil.encrypt(userData.clave) : null;
+      await pool.query('CALL sp_usuario_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
         userData.idusuario,
         userData.idrol_usuario,
         userData.dni,
@@ -133,7 +136,7 @@ export class UserRepository {
         userData.ape_pat,
         userData.ape_mat,
         userData.correo,
-        CryptoUtil.encrypt(userData.clave),
+        encryptedClave,
         userData.es_docente,
         userData.es_tutor,
         userData.vigencia,

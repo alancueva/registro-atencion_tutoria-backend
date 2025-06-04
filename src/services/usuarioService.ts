@@ -28,7 +28,7 @@ export class UserService {
      * @param idusuario 
      * @returns 
      */
-    public async recuperarUsuario(idusuario: number):Promise<IUsuario[]>{        
+    public async recuperarUsuario(idusuario: number):Promise<IUsuario>{        
         try {
             return await this.userRepository.recuperar_usuario(idusuario);
         } catch (error) {
@@ -86,7 +86,8 @@ export class UserService {
      */
     async updateUser(userData: UpdateUserDto): Promise<boolean> {
         try {
-            return await this.userRepository.update_usuario(userData);
+            const userUpdated = await this.userRepository.update_usuario(userData);
+            return userUpdated;
         } catch (error) {
             console.error('Error en UserService.updateUser:', error);
             throw error;
