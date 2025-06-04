@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import * as programaEstudioService from '../services/programaEstudioService';
+import {ProgramaEstudioService} from '../services/programaEstudioService';
 
 export class ProgramaEstudioController {
-    private programaEstudioService: programaEstudioService.ProgramaEstudioService;
+    private programaEstudioService: ProgramaEstudioService;
 
     constructor() {
-        this.programaEstudioService = new programaEstudioService.ProgramaEstudioService();
+        this.programaEstudioService = new ProgramaEstudioService();
     }
     
     /**
