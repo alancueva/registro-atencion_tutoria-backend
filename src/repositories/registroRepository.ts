@@ -1,3 +1,4 @@
+import { log } from 'console';
 import pool from '../config/DatabaseConexion';
 import { Registro, RegistroBusqueda, RegistroBusquedaDocente, RegistroResponse } from '../models/interface/registro.interface';
 
@@ -5,14 +6,15 @@ export class RegistroRepository {
 
     public async getRegistrosBusquedaDocente(registroDTO: RegistroBusquedaDocente):Promise<RegistroResponse[]> {    
         try {
-            const [rows]: any = await pool.query("CALL sp_buscar_tabla_docente(?,?,?,?,?,?,?)",
-                [registroDTO.anio,
+            const [rows]: any = await pool.query("CALL sp_buscar_tabla_docente(?,?,?,?,?)",
+                [registroDTO.id_usuario,
+                    registroDTO.anio,
                     registroDTO.mes,
                     `%${registroDTO.area}%`, 
-                    `%${registroDTO.atencion}%`, 
-                    registroDTO.id_usuario]);
+                    `%${registroDTO.atencion}%` 
+                    ]);
             
-            return rows as RegistroResponse[];
+            return rows[0] as RegistroResponse[];
             
         } catch (error) {
             
@@ -30,7 +32,7 @@ export class RegistroRepository {
                     `%${registroDTO.area}%`, 
                     `%${registroDTO.atencion}%`]);
             
-            return rows as RegistroResponse[];
+            return rows[0] as RegistroResponse[];
             
         } catch (error) {
             

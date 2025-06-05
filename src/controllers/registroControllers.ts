@@ -55,14 +55,14 @@ export class RegistroController {
             const jsonData: any[] = req.body;
             const result = await this.registroService.insertMultipleRegistros(jsonData);
             if (result) {
-                res.status(200).json({ message: 'Registros insertados correctamente', result });
+                res.status(200).json({ success: result, message: 'Registros insertados correctamente' });
             } else {
-                res.status(400).json({ message: 'No se pudo insertar los registros' });
+                res.status(400).json({ success: result, message: 'No se pudo insertar los registros' });
             }
             
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Error al insertar múltiples registros' });
+            res.status(500).json({ success: false, message: 'Error al insertar múltiples registros' });
         }
     }
 

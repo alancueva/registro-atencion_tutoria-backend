@@ -4,9 +4,9 @@ import { RegistroController } from '../controllers/registroControllers';
 const router = Router();
 const registroController = new RegistroController();
 
-router.get('/getRegistrosBusquedaDocente', (req, res) => registroController.getRegistrosBusquedaDocente(req, res));
-router.get('/getRegistrosBusquedaAdmin', (req, res) => registroController.getRegistrosBusquedaAdmin(req, res));
-router.post('/insert', (req, res) => registroController.insertRegistro(req, res));
-router.post('/insertMultiple', (req, res) => registroController.insertMultipleRegistros(req, res));
+router.post('/getRegistrosBusquedaDocente', registroController.getRegistrosBusquedaDocente.bind(registroController));
+router.post('/getRegistrosBusquedaAdmin', registroController.getRegistrosBusquedaAdmin.bind(registroController));
+router.post('/insert', registroController.insertRegistro.bind(registroController));
+router.post('/insertMultiple', registroController.insertMultipleRegistros.bind(registroController));
 
 export default router;
