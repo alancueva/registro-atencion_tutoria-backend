@@ -6,7 +6,6 @@ const router = Router();
 const excelController = new ExcelController();
 
 
-// Export to Excel route
 router.post('/export-excel', excelController.exportToExcel.bind(excelController));
 
 export default router;
