@@ -1,4 +1,3 @@
-import { log } from 'console';
 import pool from '../config/DatabaseConexion';
 import { Registro, RegistroBusqueda, RegistroBusquedaDocente, RegistroResponse } from '../models/interface/registro.interface';
 
