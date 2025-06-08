@@ -27,8 +27,7 @@ export class DashboardRepository {
         } catch (error) {
             throw error;
         }
-    }              
-    
+    }  
 
     public async getDashboardConteoPorcentajeArea(): Promise<DashboardConteoPorcentajeArea[]> {
         try {
