@@ -31,6 +31,11 @@ API para gestionar registros de atención tutorial, desarrollada en Node.js + Ex
     `npm install cors`
 - ts-node-dev
     `npm install ts-node-dev --save-dev`
+- multer
+    `npm install multer`
+    Ejecuta este comando en la raíz de tu proyecto:
+    `npm install --save-dev @types/multer`
+    Esto instala las definiciones de tipos necesarias para que TypeScript reconozca multer.
 
 ## Endpoint
 1. inicio sesion
