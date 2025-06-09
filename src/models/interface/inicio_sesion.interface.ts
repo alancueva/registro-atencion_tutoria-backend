@@ -7,7 +7,7 @@ export interface Inicio_Sesion {
     usua_datos: string;
     correo: string;
     clave: string;
-    imagen?: Buffer | null;
+    imagen?: Buffer | null | File ;
     rol: string;
     programa: string;
     turno: string;
