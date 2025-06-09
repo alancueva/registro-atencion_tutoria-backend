@@ -48,18 +48,22 @@ export class UserRepository {
       const [rows]: any = await pool.query('CALL sp_usuario_verificar_clave(?, ?, ?)', [idusuario, encryptedOld, encryptedNew]);
 
       const result = (rows as any)[0];
-      if (result && result[0] && typeof result[0].mensaje !== 'undefined') {
-        return result[0].mensaje as string;
+
+      if (result && result[0]?.mensaje) {
+        return result[0].mensaje;
       }
-      return 'No se recibió mensaje del procedimiento.';
+
+      throw new Error('No se recibió mensaje del procedimiento almacenado.');
+
     } catch (error: any) {
-      
+
       if (error.sqlMessage) {
         return error.sqlMessage;
       }
+
       console.error('Error en UserRepository.verificar_clave:', error);
       throw error;
-    } 
+    }
   }
 
   public async verificar_dni(dni: string): Promise<boolean> {
@@ -85,9 +89,11 @@ export class UserRepository {
         [idusuario, imagen]
       );
       const result = (rows as any)[0];
+
       if (result && result[0] && typeof result[0].imagen !== 'undefined') {
         return result[0].imagen as string;
       }
+
       return null;
     } catch (error) {
       console.error('Error in UserRepository.update_usuario_imagenPerfil:', error);
@@ -106,7 +112,7 @@ export class UserRepository {
         userData.ape_pat,
         userData.ape_mat,
         userData.correo,
-        encryptedClave,
+          encryptedClave,
         userData.es_docente,
         userData.es_tutor,
         userData.idTurno,

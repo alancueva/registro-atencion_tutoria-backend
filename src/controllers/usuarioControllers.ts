@@ -102,16 +102,25 @@ export class UsuarioController {
   }
 
 
+
+  /**
+   * Actualiza la imagen de perfil del usuario.
+   * @param req - Request object
+   * @param res - Response object
+   * @returns {Promise<void>}
+   * @nota { Este método espera que el ID del usuario y la imagen se envíen en el cuerpo de la solicitud. }
+   */
   public async updateUserImage(req: Request, res: Response): Promise<void> {
     try {
-      const { idusuario, imagen } = req.body;
+      const idusuario = Number(req.body.idusuario);
+      const imagen = req.file;
 
       if (!idusuario || !imagen) {
         res.status(400).json({ message: 'Faltan datos requeridos' });
         return;
       }
 
-      const result = await this.usuarioService.update_usuario_imagenPerfil(idusuario, imagen);
+      const result = await this.usuarioService.update_usuario_imagenPerfil(idusuario, imagen.buffer);
 
       if (result) {
         res.status(200).json({

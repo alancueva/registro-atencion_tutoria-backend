@@ -46,9 +46,9 @@ export class UserService {
         }
     }
 
-    public async update_usuario_imagenPerfil(idusuario: number, imagen: string): Promise<string | null> {
+    public async update_usuario_imagenPerfil(idusuario: number, imagen: Buffer): Promise<string | null> {
         try {
-            return await this.userRepository.update_usuario_imagenPerfil(idusuario, Buffer.from(imagen, 'base64'));
+            return await this.userRepository.update_usuario_imagenPerfil(idusuario, imagen);
         } catch (error) {
             console.error('Error en UserService.update_usuario_imagenPerfil:', error);
             throw error;
