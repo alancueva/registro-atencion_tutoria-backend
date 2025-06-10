@@ -12,5 +12,6 @@ router.put('/actualizar_usuario', usuarioController.updateUser.bind(usuarioContr
 router.post('/verificar_actualizar_clave', usuarioController.verificarClave.bind(usuarioController));
 router.post('/update_usuario_imagenPerfil', upload.single('imagen'), usuarioController.updateUserImage.bind(usuarioController));
 router.post('/verificar_dni', usuarioController.verificarDNI.bind(usuarioController));
+router.post('/actualizar_datos_usuario', usuarioController.actualizarDatosUsuario.bind(usuarioController));
 
 export default router;

@@ -1,4 +1,4 @@
-import { CreateUserDto, UpdateUserDto, User, UserQueryParams } from '../models/interface/usuario.interface';
+import { CreateUserDto, UpdateUserDto, User, UserQueryParams, usuario_datos_dto, usuario_datos } from '../models/interface/usuario.interface';
 import { IUsuario } from '../models/interface/usuario.interface';
 import { CryptoUtil } from '../utils/CryptoUtil';
 import pool from '../config/DatabaseConexion';
@@ -101,6 +101,25 @@ export class UserRepository {
     }
   }
 
+  public async actualizar_datos_usuario(usuario: usuario_datos_dto): Promise<usuario_datos> {
+    try {
+      const [rows]: any = await pool.query('CALL sp_usuario_update_usuario(?, ?, ?, ?, ?, ?, ?)',
+        [usuario.idusuario,
+        usuario.dni,
+        usuario.nombres,
+        usuario.ape_pat,
+        usuario.ape_mat,
+        usuario.correo,
+        usuario.usuario_modificacion
+        ]
+      );
+
+      return rows[0][0] as usuario_datos;
+    } catch (error) {
+      console.error('Error in UserRepository.actualizar_datos_usuario:', error);
+      throw error;
+    }
+  }
 
   public async insert_usuario(userData: CreateUserDto): Promise<boolean> {
     try {

@@ -1,4 +1,4 @@
-import { CreateUserDto, UpdateUserDto, UserQueryParams } from '../models/interface/usuario.interface';
+import { CreateUserDto, UpdateUserDto, UserQueryParams, usuario_datos_dto } from '../models/interface/usuario.interface';
 import { UserService } from '../services/usuarioService';
 import { Request, Response } from 'express';
 
@@ -101,7 +101,26 @@ export class UsuarioController {
     }
   }
 
+  public async actualizarDatosUsuario(req: Request, res: Response): Promise<void> {
+    try {
+      const usuarioData: usuario_datos_dto = req.body;
 
+      if (!usuarioData.idusuario) {
+        res.status(400).json({ message: 'ID de usuario es requerido' });
+        return;
+      }
+
+      const result = await this.usuarioService.actualizar_Datos_usuario(usuarioData);
+      res.status(200).json({
+        success: true,
+        message: 'Datos de usuario actualizados exitosamente',
+        data: result
+      });
+    } catch (error) {
+      console.error('Error en UsuarioController.actualizarDatosUsuario:', error);
+      res.status(500).json({ message: 'Error al actualizar los datos del usuario' });
+    }
+  }
 
   /**
    * Actualiza la imagen de perfil del usuario.

@@ -1,4 +1,4 @@
-import { CreateUserDto, UpdateUserDto, User, UserQueryParams } from '../models/interface/usuario.interface';
+import { CreateUserDto, UpdateUserDto, User, UserQueryParams, usuario_datos_dto, usuario_datos } from '../models/interface/usuario.interface';
 import { UserRepository } from '../repositories/usuarioRepository';
 import {IUsuario} from '../models/interface/usuario.interface';
 
@@ -63,6 +63,16 @@ export class UserService {
             throw error;
         }
     }
+
+    public async actualizar_Datos_usuario(usuario: usuario_datos_dto): Promise<usuario_datos> {
+        try {
+            return await this.userRepository.actualizar_datos_usuario(usuario);
+        } catch (error) {
+            console.error('Error en UserService.actualizar_Datos_usuario:', error);
+            throw error;
+        }
+    }
+
 
     /**
      * INSERTAR USUARIO
