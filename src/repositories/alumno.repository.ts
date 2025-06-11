@@ -4,7 +4,6 @@ import { Alumno, AlumnoConsulta } from '../models/interface/alumno.interface';
 export class AlumnoRepository {
 
     public async verificarUsuarioDni(a_dni: string, a_periodo_academico: string, a_anio: string): Promise<boolean> {
-        // const conn = await pool.getConnection();
         try {
             const [rows]: any = await pool.query('CALL sp_alumnos_verificar_dni(?, ?, ?)', [
                 a_dni,
@@ -19,9 +18,6 @@ export class AlumnoRepository {
         } catch (error: any) {
             throw new Error(`Error: ${error.message}`);
         } 
-                // finally {
-                //     conn.release();
-                // }
     }
 
     public async consulta_alumnos(ac: AlumnoConsulta): Promise<Alumno[]> {
@@ -65,6 +61,16 @@ export class AlumnoRepository {
                 a_idalumnos
             ]);
             return rows[0] as Alumno[];
+        } catch (error: any) {
+            throw new Error(`Error: ${error.message}`);
+        }
+    }
+
+
+    public async insertMultipleRegistros(jsonData: any[]): Promise<boolean> {
+        try {
+            await pool.query('CALL sp_alumnos_insert_multiple(?)', [JSON.stringify(jsonData)]);
+            return true;
         } catch (error: any) {
             throw new Error(`Error: ${error.message}`);
         }

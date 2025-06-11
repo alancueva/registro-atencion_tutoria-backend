@@ -47,6 +47,22 @@ export class AlumnoController {
             res.status(500).json({ error: error.message });
         }
     }
+
+    public async insertMultipleRegistros(req: Request, res: Response): Promise<void> {
+        try {
+            const jsonData: any[] = req.body;
+            const result = await this.alumnoService.insertMultipleRegistros(jsonData);
+            if (result) {
+                res.status(200).json({ success: result, message: 'Registros insertados correctamente' });
+            } else {
+                res.status(400).json({ success: result, message: 'No se pudo insertar los registros' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ success: false, message: 'Error al insertar múltiples registros' });
+        }
+    }
+
     public async insertar_alumnos(req: Request, res: Response): Promise<void> {
         const ac: Alumno = req.body;
         try {

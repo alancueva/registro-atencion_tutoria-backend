@@ -41,6 +41,14 @@ export class AlumnoService {
         }
     }
 
+    public async insertMultipleRegistros(jsonData: any[]): Promise<boolean> {
+        try {
+            return await this.alumnoRepository.insertMultipleRegistros(jsonData);
+        } catch (error: any) {
+            throw new Error(`Error al insertar múltiples registros: ${error.message}`);
+        }
+    }
+
     public async insertar_alumnos(ac: Alumno): Promise<boolean> {
         try {
             return await this.alumnoRepository.insertar_alumnos(ac);

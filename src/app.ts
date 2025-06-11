@@ -16,6 +16,16 @@ import alumnosRouter from './routes/alumnos.routes';
 
 const app = express();
 
+/**
+ * Aumenta el límite a 10mb para el cuerpo de las solicitudes
+ * Esto es útil para manejar cargas de archivos grandes o datos JSON extensos.
+ * Si no se especifica, el límite predeterminado es 100kb.
+ * @note Asegúrate de que tu servidor pueda manejar solicitudes grandes, ya que esto puede afectar el rendimiento.
+ * @note También puedes ajustar el límite según tus necesidades específicas.
+ */
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -35,11 +45,6 @@ app.use('/api/excel', excelRoutes);
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/alumnos', alumnosRouter);
 
-
-
-
-
-// Error handling middleware
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.error(err.stack);
     res.status(500).json({
