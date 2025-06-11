@@ -24,6 +24,28 @@ export interface Registro {
     fecha_baja: Date;
 }
 
+export interface TablaRegistro {
+    idarea: number;
+    area: string;
+    motivo: string;
+    osb: string;
+    fecha: Date;
+    idatencion: number;
+    atencion: string;
+    programa: string;
+    turno: string;
+    semestre: string;
+    tutor: string;
+    idusuario: number;
+    alumnos: alumnos[];
+    usuario_creacion: string;
+}
+export interface alumnos {
+    dni: string,
+    nombres: string
+}
+
+
 export interface RegistroBusqueda {
     anio: number, 
     mes: number, 

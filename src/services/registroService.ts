@@ -35,14 +35,27 @@ export class RegistroService {
         }
     }
 
-    public async insertMultipleRegistros(jsonData: any[]): Promise<boolean> {
+    
+    /**
+     * Inserta múltiples registros en la base de datos ejecutando dos métodos del repositorio en paralelo.
+     *
+     * @param jsonData - Un arreglo de objetos que representa los registros a insertar en lote.
+     * @param data - Un objeto que contiene los datos a insertar en la tabla principal de registro.
+     * @returns Una promesa que resuelve a `true` si ambas operaciones de inserción tienen éxito, de lo contrario `false`.
+     * @throws {Error} Lanza un error si alguna de las operaciones de inserción falla.
+     */
+    public async insertMultipleRegistros(jsonData: any[], data: any): Promise<boolean> {
         try {
-            return await this.registroRepository.insertTablaMultiple(jsonData);
+            // Ejecutar ambos métodos en paralelo usando Promise.all
+            const [b, b2] = await Promise.all([
+                this.registroRepository.insert_tabla_registro(data),
+                this.registroRepository.insertTablaMultiple(jsonData)
+            ]);
+            return b && b2;
         } catch (error) {
             console.error(error);
             throw new Error('Error insertando múltiples registros');
         }
-        
     }
 
 }

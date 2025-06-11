@@ -1,6 +1,6 @@
 import { RegistroService } from "../services/registroService";
 import { Request, Response } from "express";
-import { Registro, RegistroBusqueda, RegistroBusquedaDocente,RegistroResponse } from '../models/interface/registro.interface';
+import { Registro, RegistroBusqueda, RegistroBusquedaDocente} from '../models/interface/registro.interface';
 
 export class RegistroController {
     private registroService: RegistroService;
@@ -52,8 +52,10 @@ export class RegistroController {
     }
     public async insertMultipleRegistros(req: Request, res: Response): Promise<void> {
         try {
-            const jsonData: any[] = req.body;
-            const result = await this.registroService.insertMultipleRegistros(jsonData);
+            const tablaMultiple = req.body.tablaMultiple;
+            const tablaFila = req.body.tablaFila;
+
+            const result = await this.registroService.insertMultipleRegistros(tablaMultiple, tablaFila);
             if (result) {
                 res.status(200).json({ success: result, message: 'Registros insertados correctamente' });
             } else {
