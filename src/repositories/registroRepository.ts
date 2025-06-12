@@ -9,8 +9,8 @@ export class RegistroRepository {
                 [registroDTO.id_usuario,
                 registroDTO.anio,
                 registroDTO.mes,
-                `%${registroDTO.area}%`,
-                `%${registroDTO.atencion}%`
+                registroDTO.area,
+                registroDTO.atencion
                 ]);
 
             return rows[0] as RegistroResponse[];
