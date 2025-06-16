@@ -8,7 +8,7 @@ export class DashboardService {
         this.dashboardRepository = new DashboardRepository();
     }
 
-    public async getDashboardData(): Promise<DashboardConteoAdmin[]> {
+    public async getDashboardData(): Promise<DashboardConteoAdmin> {
         try {
             return await this.dashboardRepository.getDashboardData();
         } catch (error) {

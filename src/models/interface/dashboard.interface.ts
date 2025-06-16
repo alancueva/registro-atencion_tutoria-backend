@@ -1,4 +1,5 @@
 export interface DashboardConteoAdmin {
+    n_periodo: String;
     n_alumnos: number;
     n_docente: number;
     n_tutor: number;

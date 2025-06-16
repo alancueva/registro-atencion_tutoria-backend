@@ -2,15 +2,10 @@ import pool from '../config/DatabaseConexion';
 import { DashboardCantidadSesiones, DashboardConteoAdmin,DashboardConteoPorcentajeArea,DashboardDocenteSesiones } from '../models/interface/dashboard.interface';
 export class DashboardRepository {
 
-    public async getDashboardData(): Promise<DashboardConteoAdmin[]> {
+    public async getDashboardData(): Promise<DashboardConteoAdmin> {
         try {
             const [rows]: any = await pool.query("CALL sp_dashboard_conteo_cabecera_admin()");
-            return rows[0].map((row: any) => ({
-                n_alumnos: row.n_alumnos,
-                n_docente: row.n_docente,
-                n_tutor: row.n_tutor,
-                n_sesiones: row.n_sesiones
-            }));
+            return rows[0][0] as DashboardConteoAdmin;
         } catch (error) {
             throw new Error((error as Error).message);
         }

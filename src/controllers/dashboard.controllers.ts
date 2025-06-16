@@ -11,7 +11,7 @@ export class DashboardController {
 
     public async getDashboardData(req: Request, res: Response): Promise<void> {
         try {
-            const data: DashboardConteoAdmin[] = await this.dashboardService.getDashboardData();
+            const data: DashboardConteoAdmin = await this.dashboardService.getDashboardData();
             res.status(200).json({ data : data });
         } catch (error) {
             res.status(500).json({ message: (error as Error).message });
