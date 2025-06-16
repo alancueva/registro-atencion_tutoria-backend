@@ -13,6 +13,7 @@ import registroRouter from './routes/registroRouter';
 import excelRoutes from './routes/excel.routes';
 import dashboardRouter from './routes/dashboard.router';
 import alumnosRouter from './routes/alumnos.routes';
+import periodoRouter from './routes/periodo_academico.routes';
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use('/api/registro', registroRouter);
 app.use('/api/excel', excelRoutes);
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/alumnos', alumnosRouter);
+app.use('/api/periodoAcademico', periodoRouter);
 
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.error(err.stack);
