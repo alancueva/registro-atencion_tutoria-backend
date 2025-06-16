@@ -44,7 +44,7 @@ export class ProgramaEstudioRepository {
             const [result]: any = await pool.query("CALL sp_programa_recuperar(?)", [id]);
 
             if (result.length > 0) {
-                return result[0] as ProgramaEstudio;
+                return result[0][0] as ProgramaEstudio;
             } else {
                 return null;
             }

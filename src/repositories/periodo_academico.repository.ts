@@ -12,7 +12,7 @@ export class PeriodoAcademicoRepository {
     public async getPeriodoAcademico(): Promise<PeriodoAcademico> {
         try {
             const [result]: any = await pool.query("CALL sp_periodo_academico()");
-            return result[0] as PeriodoAcademico;
+            return result[0][0] as PeriodoAcademico;
         } catch (error) {
             console.error('Error en PeriodoAcademicoRepository.getPeriodos:', error);
             throw error;
