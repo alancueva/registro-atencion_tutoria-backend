@@ -9,6 +9,9 @@ export interface Inicio_Sesion {
     clave: string;
     imagen?: Buffer | null | File ;
     rol: string;
+    estado_matricula: string;
+    estado_sistema: string;
+    periodo_academico: string;
     programa: string;
     turno: string;
     semestre: string;

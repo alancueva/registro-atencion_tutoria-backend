@@ -11,23 +11,27 @@ export class InicioSesionRepository {
             const clave = await CryptoUtil.encrypt(u_clave);
             const [rows]: any = await pool.query('CALL sp_inicio_sesion(?, ?)', [u_dni, clave]);
 
-            const result = rows[0];
-            if (result && result.length > 0) {
+            const result = rows[0][0];
+
+            if (result) {
                 const sesion: Inicio_Sesion = {
-                    idusuario: result[0].idusuario,
-                    dni: result[0].dni,
-                    nombres: result[0].nombre,
-                    ape_pat: result[0].ape_pat,
-                    ape_mat: result[0].ape_mat,
-                    usua_datos: result[0].usua_datos,
-                    correo: result[0].correo,
-                    clave: result[0].clave,
-                    imagen: result[0].imagen ? result[0].imagen : null,
-                    rol: result[0].rol,
-                    programa: result[0].programa,
-                    turno: result[0].turno,
-                    semestre: result[0].semestre,
-                    vigencia: result[0].vigencia
+                    idusuario: result.idusuario,
+                    dni: result.dni,
+                    nombres: result.nombre,
+                    ape_pat: result.ape_pat,
+                    ape_mat: result.ape_mat,
+                    usua_datos: result.usua_datos,
+                    correo: result.correo,
+                    clave: result.clave,
+                    imagen: result.imagen ? result.imagen : null,
+                    rol: result.rol,
+                    estado_matricula: result.estado_matricula,
+                    estado_sistema: result.estado_sistema,
+                    periodo_academico: result.periodo_academico,
+                    programa: result.programa,
+                    turno: result.turno,
+                    semestre: result.semestre,
+                    vigencia: result.vigencia
                 };
                 return sesion;
             }
