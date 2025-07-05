@@ -1,57 +1,85 @@
-# Sistema de Registro de Atención Tutorial - Backend  
+# Sistema de Registro de Atención Tutorial - Backend
 
-API para gestionar registros de atención tutorial, desarrollada en Node.js + Express.  
+API para gestionar registros de atención tutorial, desarrollada en Node.js + Express.
 
-## Características  
-- Registro de sesiones de tutoría  
--  
+## Características
 
-## Tecnologías  
-- Node.js  
-- Express
-- Mysql  
-- postgres
-    npm i pg
-    npm install --save-dev @types/pg
+- Registro y gestión de sesiones de tutoría.
+- Integración con bases de datos MySQL y PostgreSQL.
+- Exportación de datos a Excel.
+- Soporte para carga de archivos (multer).
+- Configuración flexible mediante variables de entorno.
+- Endpoints protegidos con CORS.
+- Desarrollo y recarga automática con ts-node-dev.
 
-## Instalación  
-1. Clona el repositorio  
-2. `npm install`  
-3. Configura `.env` (ver `.env.example`)  
-4. `npm start`  
-5. para compilar: `npm run build`
-6. Para desarrollo:  `npm run dev`
+## Tecnologías
 
-## Dependencia
-- excel
-    `npm install exceljs`
-- mysql2
-    `npm install mysql2`
-- cors
-    `npm install cors`
-- ts-node-dev
-    `npm install ts-node-dev --save-dev`
-- multer
-    `npm install multer`
-    Ejecuta este comando en la raíz de tu proyecto:
-    `npm install --save-dev @types/multer`
-    Esto instala las definiciones de tipos necesarias para que TypeScript reconozca multer.
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [MySQL](https://www.npmjs.com/package/mysql2)
+- [PostgreSQL](https://www.npmjs.com/package/pg)
+- [ExcelJS](https://www.npmjs.com/package/exceljs)
+- [Multer](https://www.npmjs.com/package/multer)
+- [CORS](https://www.npmjs.com/package/cors)
+- [TypeScript](https://www.typescriptlang.org/)
 
-## Endpoint
-1. inicio sesion
-    * GET 
-        - http://localhost:3000/api/inicio_sesion/inicio_sesion/:dni/:contrasena
-2. Usuario:
-    * GET
-        - http://localhost:3000/api/usuario/recuperar_usuario/2
-        - http://localhost:3000/api/usuario/buscar_usuario/                 
-    * POST
-        - http://localhost:3000/api/usuario/insert_usuario  
-        - http://localhost:3000/api/usuario/verificar_actualizar_clave 
-        - http://localhost:3000/api/usuario/verificar_dni 
-    * PUT 
-        - http://localhost:3000/api/usuario/actualizar_usuario/          
-        - http://localhost:3000/api/usuario/update_usuario_imagenPerfil 
+## Instalación
 
-3. Registro
-    
+1. Clona el repositorio:
+    ```bash
+    git clone <URL_DEL_REPOSITORIO>
+    cd registro-atencion_tutoria-backend
+    ```
+2. Instala las dependencias:
+    ```bash
+    npm install
+    ```
+3. Configura las variables de entorno:
+    - Copia `.env.example` a `.env` y completa los valores necesarios.
+4. Inicia el servidor:
+    ```bash
+    npm start
+    ```
+5. Para compilar el proyecto:
+    ```bash
+    npm run build
+    ```
+6. Para desarrollo con recarga automática:
+    ```bash
+    npm run dev
+    ```
+
+## Dependencias principales
+
+- **exceljs**  
+  Para exportar datos a archivos Excel.
+  ```bash
+  npm install exceljs
+  ```
+- **mysql2**  
+  Cliente para MySQL.
+  ```bash
+  npm install mysql2
+  ```
+- **pg**  
+  Cliente para PostgreSQL.
+  ```bash
+  npm install pg
+  npm install --save-dev @types/pg
+  ```
+- **cors**  
+  Middleware para habilitar CORS.
+  ```bash
+  npm install cors
+  ```
+- **multer**  
+  Middleware para manejo de archivos.
+  ```bash
+  npm install multer
+  npm install --save-dev @types/multer
+  ```
+- **ts-node-dev**  
+  Herramienta para desarrollo con recarga automática.
+  ```bash
+  npm install ts-node-dev --save-dev
+  ```
