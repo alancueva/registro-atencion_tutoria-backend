@@ -83,3 +83,14 @@ API para gestionar registros de atención tutorial, desarrollada en Node.js + Ex
   ```bash
   npm install ts-node-dev --save-dev
   ```
+  **Rate Limiting**
+
+  ```bash
+  npm install express-rate-limit
+  npm install --save-dev @types/express-rate-limit
+  ```
+  **JWT**
+  ```bash
+  npm install jsonwebtoken bcryptjs
+  npm install --save-dev @types/jsonwebtoken @types/bcryptjs
+  ```
