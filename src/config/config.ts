@@ -23,10 +23,10 @@ const config = {
     waitForConnections: process.env.DB_WAIT_FOR_CONNECTIONS || true
   },
   jwt: {
-    secret: process.env.JWT_SECRET,
-    expiresIn: process.env.JWT_EXPIRES_IN,
-    refreshSecret: process.env.REFRESH_TOKEN_SECRET,
-    refreshExpiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN
+    secret: process.env.JWT_SECRET as string, 
+    expiresIn: process.env.JWT_EXPIRES_IN as string,
+    refreshSecret: process.env.REFRESH_TOKEN_SECRET as string,
+    refreshExpiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN as string
   },
   email: {
     smtp: {
