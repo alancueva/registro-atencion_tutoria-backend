@@ -25,10 +25,11 @@ export const autenticar = (req: Request, res: Response, next: NextFunction) => {
         const token = req.header('Authorization')?.replace('Bearer ', '');
 
         if (!token) {
-            return res.status(401).json({
+             res.status(401).json({
                 success: false,
                 message: 'Acceso no autorizado. Token requerido.'
             });
+            return;
         }
 
         const decoded = JWTService.verificarToken(token);
@@ -71,11 +72,12 @@ export const autorizar = (...rolesPermitidos: string[]) => {
             !req.usuario ||
             !(rolesPermitidos.includes(req.usuario.rol) || req.usuario.rol === 'admin')
         ) {
-            return res.status(403).json({
+            res.status(403).json({
                 success: false,
                 message: 'No tienes permisos para acceder a este recurso',
                 errorCode: 'ACCESO_NO_AUTORIZADO'
             });
+            return; 
         }
         next();
     };
