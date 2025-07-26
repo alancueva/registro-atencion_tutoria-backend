@@ -11,8 +11,10 @@ import config from './config';
 //   password: config.db.password,
 //   port: config.db.port ? Number(config.db.port) : 5432,
 // })
+
 const pool = mysql.createPool({
   host: config.db.host,
+  port: Number(config.db.port),
   user: config.db.user,
   password: config.db.password,
   database: config.db.name,

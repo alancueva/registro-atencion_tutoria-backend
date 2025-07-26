@@ -12,15 +12,15 @@ const config = {
     apiPrefix: process.env.API_PREFIX || '/api'
   },
   db: {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    name: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    dialect: process.env.DB_DIALECT,
-    connectionLimit: process.env.DB_CONNECTION_LIMIT || 10,
-    queueLimit: process.env.DB_QUEUE_LIMIT || '0',
-    waitForConnections: process.env.DB_WAIT_FOR_CONNECTIONS || true
+    host: process.env.DB_HOST_D,
+    port: process.env.DB_PORT_D,
+    name: process.env.DB_NAME_D,
+    user: process.env.DB_USER_D,
+    password: process.env.DB_PASSWORD_D,
+    dialect: process.env.DB_DIALECT_D,
+    connectionLimit: process.env.DB_CONNECTION_LIMIT_D || 10,
+    queueLimit: process.env.DB_QUEUE_LIMIT_D || '0',
+    waitForConnections: process.env.DB_WAIT_FOR_CONNECTIONS_D || true
   },
   jwt: {
     secret: process.env.JWT_SECRET as string, 
