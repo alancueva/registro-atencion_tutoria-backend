@@ -12,6 +12,7 @@ router.get('/recuperar_usuario/:idusuario', usuarioController.recuperarUsuario.b
 router.post('/insert_usuario', usuarioController.createUser.bind(usuarioController));
 router.put('/actualizar_usuario', usuarioController.updateUser.bind(usuarioController));
 router.post('/verificar_dni', usuarioController.verificarDNI.bind(usuarioController));
+router.post('/verificar_asignacion_tutores', usuarioController.verificar_asignacion_tutores.bind(usuarioController));
 
 // Rutas protegidas que requieren autenticación
 router.post('/actualizar_datos_usuario', autenticar, asyncHandler(usuarioController.actualizarDatosUsuario.bind(usuarioController)));

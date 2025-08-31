@@ -64,6 +64,15 @@ export class UserService {
         }
     }
 
+    public async verificar_asignacion_tutores(idProgramaDeEstudio: number, idTurno: number, idsemestre: number): Promise<{ success: boolean; texto: string }> {
+        try {
+            return await this.userRepository.verificar_asignacion_tutores(idProgramaDeEstudio, idTurno, idsemestre);
+        } catch (error) {
+            console.error('Error en UserService.verificar_asignacion_tutores:', error);
+            throw error;
+        }
+    }
+
     public async actualizar_Datos_usuario(usuario: usuario_datos_dto): Promise<usuario_datos> {
         try {
             return await this.userRepository.actualizar_datos_usuario(usuario);

@@ -101,6 +101,28 @@ export class UsuarioController {
     }
   }
 
+  public async verificar_asignacion_tutores(req: Request, res: Response): Promise<void> {
+    try {
+      const { idProgramaDeEstudio, idTurno, idsemestre } = req.body;
+
+      if (!idProgramaDeEstudio || !idTurno || !idsemestre) {
+        res.status(400).json({ message: 'Faltan datos requeridos' });
+        return;
+      }
+
+      const result = await this.usuarioService.verificar_asignacion_tutores(idProgramaDeEstudio, idTurno, idsemestre);
+
+      res.status(200).json({
+        success: true,
+        message: 'Verificación de asignación de tutores',
+        data: result
+      });
+    } catch (error) {
+      console.error('Error en UsuarioController.verificar_asignacion_tutores:', error);
+      res.status(500).json({ message: 'Error al verificar la asignación de tutores' });
+    }
+  }
+
   public async actualizarDatosUsuario(req: Request, res: Response): Promise<void> {
     try {
       const usuarioData: usuario_datos_dto = req.body;

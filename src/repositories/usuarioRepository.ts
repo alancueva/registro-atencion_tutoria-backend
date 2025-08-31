@@ -80,6 +80,33 @@ export class UserRepository {
     }
   }
 
+  public async verificar_asignacion_tutores(idProgramaDeEstudio: number, idTurno: number, idsemestre: number): Promise<{ success: boolean; texto: string }> {
+    try {
+      const [rows]: any = await pool.query('CALL sp_usuario_tutor_verificar_asignacion(?, ?, ?)', [idProgramaDeEstudio, idTurno, idsemestre]);
+      const result = (rows as any)[0];
+
+      /**
+       * Siempre va a tener que entrar a la condición
+       */
+      if (result && result[0]) {
+        return {
+          success: !!result[0].success,
+          texto: result[0].texto || ''
+        };
+      }
+
+      return {
+        success: false,
+        texto: ''
+      };
+
+
+    } catch (error) {
+      console.error('Error in UserRepository.verificar_asignacion_tutores:', error);
+      throw error;
+    }
+  }
+
 
   public async update_usuario_imagenPerfil(idusuario: number, imagen: Buffer): Promise<string | null> {
 
